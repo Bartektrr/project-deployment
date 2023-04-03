@@ -8,12 +8,16 @@
         <div class="mb-3">
             <input class="form-control" type="file" id="formFile">
         </div>
-        <% pictures.forEach(function(picture){ %>
+        <!-- <% pictures.forEach(function(picture){ %>
             <div class="text-center">
               <img class="mb-3" src="/<%=picture%>" style="width:500px">
               <h4><%=picture%></h4>
             </div>
-        <% });%>
+        <% });%> -->
+        <section >
+            <img class="mb-3" src="https://s3-eu-north-1.amazonaws.com/cyclic-careful-twill-tuna-eu-north-1/public/dalgandiego.jpg" style="width:500px">
+            <img ng-src=" width="200px" height="200px" ng-repeat="image in allImageData">
+        </section>        
         <script src="../javascripts/pictures.js"></script> 
     </body>
 </html>
