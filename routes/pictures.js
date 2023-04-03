@@ -11,7 +11,8 @@ router.get('/', async function(req, res, next) {
   //   if (err) console.log(err, err.stack); // an error occurred
   //   else     console.log(data);           // successful response
   // });
-  const pictures = fs.readdirSync(path.join(__dirname, '../pictures/'));
+  // const pictures = fs.readdirSync(path.join(__dirname, '../pictures/'));
+  const pictures = []
   res.render('pictures', { pictures: pictures});
 });
 
