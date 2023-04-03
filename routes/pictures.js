@@ -7,12 +7,23 @@ const s3 = new AWS.S3()
 // Or
 /* GET pictures listing. */
 router.get('/', async function(req, res, next) {
-  // pictures = s3.listObjectsV2(params, function(err, data) {
-  //   if (err) console.log(err, err.stack); // an error occurred
-  //   else     console.log(data);           // successful response
-  // });
-  // const pictures = fs.readdirSync(path.join(__dirname, '../pictures/'));
-  const pictures = []
+  var params = {
+    Bucket: process.env.CYCLIC_BUCKET_NAME,
+    Delimiter: '/',
+    Prefix: 'public/'
+  };
+  var allObjects = await s3.listObjects(params).promise();
+  var keys = allObjects?.Contents.map( x=> x.Key)
+  const pictures = await Promise.all(keys.map(async (key) => {
+    let my_file = await s3.getObject({
+      Bucket: process.env.CYCLIC_BUCKET_NAME,
+      Key: key,
+    }).promise();
+    return {
+        src: Buffer.from(my_file.Body).toString('base64'),
+        name: key.split("/").pop()
+    }
+  }))
   res.render('pictures', { pictures: pictures});
 });
 
